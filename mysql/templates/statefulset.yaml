@@ -1,0 +1,50 @@
+# apiVersion: storage.k8s.io/v1
+# kind: StorageClass
+# metadata:
+#   name: ebs-sc
+#   namespace: {{ .Values.namespace }}
+# provisioner: ebs.csi.aws.com
+# volumeBindingMode: WaitForFirstConsumer
+
+# ---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: mysql # has to match .spec.template.metadata.labels
+  serviceName: "mysql"
+  replicas: {{ .Values.replicas }} # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: mysql # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: jagadevops321/mysql:1.0.0
+        envFrom:
+        - configMapRef:
+           name: mysql 
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql
+      namespace: {{ .Values.namespace }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi
