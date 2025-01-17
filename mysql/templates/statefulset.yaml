@@ -28,7 +28,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: mysql
-        image: jagadevops321/mysql:1.0.0
+        image: jagadevops321/mysql:{{ .Values.imageversion }}
         envFrom:
         - configMapRef:
            name: mysql
