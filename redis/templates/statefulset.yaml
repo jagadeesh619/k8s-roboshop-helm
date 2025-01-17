@@ -30,7 +30,7 @@ spec:
       - name: redis
         image: redis
         ports:
-        - containerPort: 27017
+        - containerPort: 6379
           name: redis
         volumeMounts:
         - name: redis
