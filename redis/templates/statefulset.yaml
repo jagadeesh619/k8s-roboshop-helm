@@ -28,7 +28,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: redis
-        image: jagadevops321/redis:{{ .Values.imageversion }}
+        image: redis
         ports:
         - containerPort: 27017
           name: redis
