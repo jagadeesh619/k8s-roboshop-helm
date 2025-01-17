@@ -31,7 +31,7 @@ spec:
         image: jagadevops321/mysql:1.0.0
         envFrom:
         - configMapRef:
-           name: mysql 
+           name: mysql
         ports:
         - containerPort: 3306
           name: mysql
