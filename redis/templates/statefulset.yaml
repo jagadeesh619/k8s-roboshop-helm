@@ -1,12 +1,12 @@
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ebs-sc
-  namespace: {{ .Values.namespace }}
-provisioner: ebs.csi.aws.com
-volumeBindingMode: WaitForFirstConsumer
+# apiVersion: storage.k8s.io/v1
+# kind: StorageClass
+# metadata:
+#   name: ebs-sc
+#   namespace: {{ .Values.namespace }}
+# provisioner: ebs.csi.aws.com
+# volumeBindingMode: WaitForFirstConsumer
 
----
+# ---
 
 apiVersion: apps/v1
 kind: StatefulSet
