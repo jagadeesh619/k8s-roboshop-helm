@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: rabbitmq
+spec:
+  ports:
+  - port: 5672
+    name: rabbitmq
+  clusterIP: None   # For headless service the cluster ip will be none 
+  selector:
+    app: rabbitmq
