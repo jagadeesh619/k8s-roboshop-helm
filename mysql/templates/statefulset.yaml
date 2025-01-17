@@ -29,6 +29,8 @@ spec:
       containers:
       - name: mysql
         image: jagadevops321/mysql:{{ .Values.imageversion }}
+        args:
+        - "--ignore-db-dir=lost+found"
         envFrom:
         - configMapRef:
            name: mysql
