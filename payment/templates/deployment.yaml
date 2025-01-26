@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+  labels:
+    app: payment
+    tier: backend
+spec:
+  # modify replicas according to your case
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+        app: payment
+        tier: backend                # Upto here this is replica set definition 
+  template:                             # From here POD definition starts 
+    metadata:
+      labels:
+        app: payment
+        tier: backend
+    spec:
+      containers:
+      - name: payment
+        image: jagadevops321/payment:{{ .Values.imageversion }}
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+        envFrom:
+        - secretRef:
+           name: payment  

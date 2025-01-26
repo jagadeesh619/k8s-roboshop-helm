@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+        app: web
+        tier: frontend                # Upto here this is replica set definition 
+  template:                             # From here POD definition starts 
+    metadata:
+      labels:
+        app: web
+        tier: frontend 
+    spec:
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: web
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      containers:
+      - name: web
+        image: jagadevops321/web:{{ .Values.imageversion }}
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+            readOnly: true

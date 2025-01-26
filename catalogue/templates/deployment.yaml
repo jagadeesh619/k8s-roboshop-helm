@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  labels:
+    app: catalogue
+    tier: backend
+spec:
+  # modify replicas according to your case
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+        app: catalogue
+        tier: backend                # Upto here this is replica set definition 
+  template:                             # From here POD definition starts 
+    metadata:
+      labels:
+        app: catalogue
+        tier: backend
+    spec:
+      containers:
+      - name: catalogue
+        image: jagadevops321/catalogue:{{ .Values.imageversion }}
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+        envFrom:
+        - configMapRef:
+           name: catalogue  

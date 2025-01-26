@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: payment
+    tier: backend
+spec:
+  ports:
+  - port: 8080
+    name: payment
+  selector:
+    app: payment
+    tier: backend

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: cart
+    tier: backend
+spec:
+  ports:
+  - port: 8080
+    name: cart
+  selector:
+    app: cart
+    tier: backend
